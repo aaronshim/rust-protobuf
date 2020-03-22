@@ -58,7 +58,7 @@ impl OneofField {
             elem,
             oneof_name: oneof.name().to_string(),
             oneof_type_name: RustType::Oneof(RustRelativePath(oneof.rust_name())),
-            boxed,
+            boxed: boxed,
         }
     }
 
@@ -145,12 +145,8 @@ impl<'a> OneofGen<'a> {
         }
     }
 
-    pub fn name(&self) -> &str {
-        match self.oneof.oneof.get_name() {
-            "type" => "field_type",
-            "box" => "field_box",
-            x => x,
-        }
+    pub fn name(&self) -> String {
+        self.oneof.name()
     }
 
     pub fn variants_except_group(&'a self) -> Vec<OneofVariantGen<'a>> {
